@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'litter_detection'
+package_name = 'litter_detection_ros2'
 
 setup(
     name=package_name,
@@ -26,7 +26,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'litter_detection_node = litter_detection.litter_detection_node:main'
+            'litter_detection_node = litter_detection_ros2.litter_detection_node:main'
         ],
     },
 )

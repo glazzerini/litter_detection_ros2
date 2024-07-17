@@ -5,7 +5,7 @@ from launch_ros.actions import Node
 from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
-    pkg_name = 'litter_detection'  
+    pkg_name = 'litter_detection_ros2'  
 
     # Parameters to be passed to the node
     model_type = LaunchConfiguration('model_type', default='PT') # PT (PyTorch), OV (OpenVino), ONNX
