@@ -1,0 +1,3 @@
+model_type: OV # PT (PyTorch), OV (OpenVino), ONNX 
+confidence: 0.78
+device: "cpu"
