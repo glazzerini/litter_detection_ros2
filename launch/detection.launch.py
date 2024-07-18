@@ -13,9 +13,15 @@ def generate_launch_description():
     device = LaunchConfiguration('device', default='cpu')
 
     # Get path to package
-    pkg_path = os.path.join(os.getenv('ROS_PACKAGE_PATH').split(':')[0], pkg_name)
-    print(pkg_path)
+    pkg_share_path = get_package_share_directory(pkg_name)
 
+    # Get the workspace root by going up three levels from the share directory
+    workspace_root = os.path.abspath(os.path.join(pkg_share_path, '../../../..'))
+
+    # Construct the source directory path
+    pkg_path = os.path.join(workspace_root, 'src', pkg_name)
+    
+    
     return LaunchDescription([
         Node(
             package=pkg_name,
