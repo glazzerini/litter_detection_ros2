@@ -1,4 +1,5 @@
 from setuptools import find_packages, setup
+from glob import glob
 
 package_name = 'litter_detection_ros2'
 
@@ -11,7 +12,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
         ('share/' + package_name + '/launch', ['launch/detection.launch.py']), 
-        ('share/' + package_name + '/launch/cfg', ['launch/cfg/detection.yaml'])
+        ('share/' + package_name + '/launch/cfg', ['launch/cfg/detection.yaml']),
     ],
     install_requires=[
         'setuptools',

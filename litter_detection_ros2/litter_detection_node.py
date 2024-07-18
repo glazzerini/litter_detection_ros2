@@ -6,7 +6,7 @@ from sensor_msgs.msg import CompressedImage, Image
 import cv2
 from ultralytics import YOLO
 from cv_bridge import CvBridge
-from litter_detection.msg import DetectionResults
+from custom_msgs.msg import DetectionResults
 from std_msgs.msg import Header
 
 
@@ -37,6 +37,7 @@ class LitterDetector(Node):
         else:
             self.model_path = self.pkg_path + model_paths.get(self.model_type, '/models/best.pt')
 
+        self.get_logger().info(self.model_path)
         self.model = YOLO(self.model_path, task="detect")
         self.get_logger().info(f"---- INSTANCIATED MODEL OF TYPE {self.model_type} ----")
 
