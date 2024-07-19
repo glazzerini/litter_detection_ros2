@@ -8,8 +8,8 @@ def generate_launch_description():
     pkg_name = 'litter_detection_ros2'  
 
     # Parameters to be passed to the node
-    model_type = LaunchConfiguration('model_type', default='PT') # PT (PyTorch), OV (OpenVino), ONNX
-    confidence = LaunchConfiguration('confidence', default=0.5)
+    model_type = LaunchConfiguration('model_type', default='ONNX') # PT (PyTorch), OV (OpenVino), ONNX
+    confidence = LaunchConfiguration('confidence', default=0.78)
     device = LaunchConfiguration('device', default='cpu')
 
     # Get path to package
