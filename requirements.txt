@@ -1,0 +1,12 @@
+cv_bridge==1.16.2
+opencv_python==4.8.1.78
+opencv_python_headless==4.10.0.84
+rospy==1.16.0
+rospkg==1.5.1
+sensor_msgs==1.13.1
+onnx==1.16.1
+onnxruntime==1.18.0
+openvino==2024.2.0
+openvino-telemetry==2024.1.0
+--extra-index-url https://download.pytorch.org/whl/cpu
+ultralytics==8.2.24
