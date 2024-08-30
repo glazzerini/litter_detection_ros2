@@ -2,7 +2,7 @@
 
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import CompressedImage, Image
+from sensor_msgs.msg import CompressedImage
 import cv2
 from ultralytics import YOLO
 from cv_bridge import CvBridge
@@ -45,7 +45,7 @@ class LitterDetector(Node):
         self.camera_sub = self.create_subscription(CompressedImage, '/camera_usb/compressed', self.camera_callback, 1)
 
         # Publishers
-        self.detection_pub = self.create_publisher(Image, '/detection', 1)
+        self.detection_pub = self.create_publisher(CompressedImage, '/detection', 1)
         self.detection_data_pub = self.create_publisher(DetectionResults, '/detection_data', 1)
 
     def predict(self, chosen_model, img, classes=[], conf=0.8, device='cpu'):
@@ -105,7 +105,7 @@ class LitterDetector(Node):
         detection_results_msg.box_confidences = box_confidences
         detection_results_msg.box_coordinates = box_coordinates
 
-        self.detection_pub.publish(self.bridge.cv2_to_imgmsg(result_img, "bgr8"))
+        self.detection_pub.publish(self.bridge.cv2_to_compressed_imgmsg(result_img, "jpg"))
         self.detection_data_pub.publish(detection_results_msg)
 
     def run(self):
