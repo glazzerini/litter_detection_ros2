@@ -51,7 +51,7 @@ class LitterDetector(Node):
         self.get_logger().info(f"---- INSTANCIATED MODEL {self.model_train} OF TYPE {self.model_type} ----")
 
         # Subscribers
-        self.camera_sub = self.create_subscription(CompressedImage, '/camera_usb/compressed', self.camera_callback, 1)
+        self.camera_sub = self.create_subscription(CompressedImage, '/catamaran/image_raw/compressed', self.camera_callback, 1)
 
         # Publishers
         self.detection_pub = self.create_publisher(CompressedImage, '/detection', 1)
