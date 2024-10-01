@@ -18,6 +18,7 @@ class LitterDetector(Node):
         self.bridge = CvBridge()
 
         # Parameters
+        self.declare_parameter('detection.model_train', 'flow_fw_train_640')
         self.declare_parameter('detection.model_type', 'PT')
         self.declare_parameter('detection.confidence', 0.5)
         self.declare_parameter('detection.device', 'cpu')
@@ -25,6 +26,7 @@ class LitterDetector(Node):
         self.declare_parameter('pkg_path', '')
 
 
+        self.model_train = self.get_parameter('detection.model_train').get_parameter_value().string_value
         self.model_type = self.get_parameter('detection.model_type').get_parameter_value().string_value
         self.confidence = self.get_parameter('detection.confidence').get_parameter_value().double_value
         self.device = self.get_parameter('detection.device').get_parameter_value().string_value
@@ -35,18 +37,18 @@ class LitterDetector(Node):
         self.avg_inference_window_size = self.get_parameter('detection.avg_inference_window_size').get_parameter_value().integer_value
 
         model_paths = {
-            "PT": '/models/best.pt',
-            "OV": '/models/best_openvino_model',
-            "ONNX": '/models/best.onnx'
+            "PT": '/best.pt',
+            "OV": '/best_openvino_model',
+            "ONNX": '/best.onnx'
         }
         if self.model_type not in model_paths:
             self.get_logger().error("Model type not recognised")
         else:
-            self.model_path = self.pkg_path + model_paths.get(self.model_type, '/models/best.pt')
+            self.model_path = self.pkg_path + "/models/" + self.model_train + model_paths.get(self.model_type, '/best.pt')
 
         self.get_logger().info(self.model_path)
         self.model = YOLO(self.model_path, task="detect")
-        self.get_logger().info(f"---- INSTANCIATED MODEL OF TYPE {self.model_type} ----")
+        self.get_logger().info(f"---- INSTANCIATED MODEL {self.model_train} OF TYPE {self.model_type} ----")
 
         # Subscribers
         self.camera_sub = self.create_subscription(CompressedImage, '/camera_usb/compressed', self.camera_callback, 1)
