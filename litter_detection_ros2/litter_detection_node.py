@@ -54,7 +54,7 @@ class LitterDetector(Node):
         self.camera_sub = self.create_subscription(CompressedImage, '/catamaran/image_raw/compressed', self.camera_callback, 1)
 
         # Publishers
-        self.detection_pub = self.create_publisher(CompressedImage, '/detection', 1)
+        # self.detection_pub = self.create_publisher(CompressedImage, '/detection', 1)
         self.detection_data_pub = self.create_publisher(DetectionResults, '/detection_data', 1)
 
 
@@ -82,8 +82,9 @@ class LitterDetector(Node):
         start_time = self.get_clock().now()
 
         img = self.bridge.compressed_imgmsg_to_cv2(msg, "passthrough")
+
         result_img, results = self.predict_and_detect(self.model, img, classes=[], conf=self.confidence, device=self.device)
-        
+
         end_time = self.get_clock().now()
         dt = end_time - start_time
         inference_time_ms = dt.nanoseconds / 1e6
@@ -103,6 +104,8 @@ class LitterDetector(Node):
         # Prepare the detection result message
         detection_results_msg = DetectionResults()
         detection_results_msg.header = Header()
+        detection_results_msg.image = msg.data
+        detection_results_msg.image_format = msg.format
         detection_results_msg.header.stamp = self.get_clock().now().to_msg()
         detection_results_msg.preprocess_time = [result.speed['preprocess'] for result in results]
         detection_results_msg.inference_time = [result.speed['inference'] for result in results]
@@ -133,7 +136,7 @@ class LitterDetector(Node):
         detection_results_msg.box_coordinates = box_coordinates
 
         # Publish the processed image and detection results
-        self.detection_pub.publish(self.bridge.cv2_to_compressed_imgmsg(result_img, "jpg"))
+        # self.detection_pub.publish(self.bridge.cv2_to_compressed_imgmsg(result_img, "jpg"))
         self.detection_data_pub.publish(detection_results_msg)
 
     def run(self):
