@@ -54,7 +54,7 @@ class LitterDetector(Node):
         self.camera_sub = self.create_subscription(CompressedImage, '/catamaran/image_raw/compressed', self.camera_callback, 1)
 
         # Publishers
-        # self.detection_pub = self.create_publisher(CompressedImage, '/detection', 1)
+        self.detection_pub = self.create_publisher(CompressedImage, '/detection', 1)
         self.detection_data_pub = self.create_publisher(DetectionResults, '/detection_data', 1)
 
 
@@ -136,7 +136,7 @@ class LitterDetector(Node):
         detection_results_msg.box_coordinates = box_coordinates
 
         # Publish the processed image and detection results
-        # self.detection_pub.publish(self.bridge.cv2_to_compressed_imgmsg(result_img, "jpg"))
+        self.detection_pub.publish(self.bridge.cv2_to_compressed_imgmsg(result_img, "jpg"))
         self.detection_data_pub.publish(detection_results_msg)
 
     def run(self):

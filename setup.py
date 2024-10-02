@@ -27,7 +27,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'litter_detection_node = litter_detection_ros2.litter_detection_node:main'
+            'litter_detection_node = litter_detection_ros2.litter_detection_node:main',
+            'show_results = litter_detection_ros2.show_results:main'
         ],
     },
 )
