@@ -8,9 +8,9 @@ def generate_launch_description():
     pkg_name = 'litter_detection_ros2'  
 
     # Parameters to be passed to the node
-    model_train = LaunchConfiguration('model_train', default='flow_fw_train_640') # wc_train_640, flow_fw_train_640, flow_fw_jarun_train_640, all_train_640 
+    model_train = LaunchConfiguration('model_train', default='all_train_640') # wc_train_640, flow_fw_train_640, flow_fw_jarun_train_640, all_train_640 
     model_type = LaunchConfiguration('model_type', default='OV') # PT (PyTorch), OV (OpenVino), ONNX
-    confidence = LaunchConfiguration('confidence', default=0.78)
+    confidence = LaunchConfiguration('confidence', default=0.5)
     device = LaunchConfiguration('device', default='cpu')
     avg_inference_window_size = LaunchConfiguration('avg_inference_window_size', default=200)
 
